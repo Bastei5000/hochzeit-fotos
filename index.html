@@ -54,7 +54,7 @@
 
     h1{
       margin-top:0;
-      color:#e11d48;
+      color:#2e7d32; /* Grün */
     }
 
     p{
@@ -67,7 +67,7 @@
     }
 
     button{
-      background:#e11d48;
+      background:#2e7d32; /* Grün */
       color:white;
       border:none;
 
@@ -82,7 +82,7 @@
     }
 
     button:hover{
-      opacity:0.9;
+      background:#256628; /* Dunkleres Grün beim Hover */
     }
 
     #status{
@@ -128,107 +128,6 @@
     <p id="status"></p>
 
   </div>
-
-<script>
-
-const UPLOAD_URL =
-"https://script.google.com/macros/s/AKfycbzylfuq0Zp7Jz6pOY8bI1Tw7DCbY9in06y9pYJLuLAyJiQJbjJeJ8sihP3XOfor1eJZ/exec"
-
-
-async function uploadPhotos() {
-
-  const files =
-    document.getElementById('photos').files;
-
-  if(files.length === 0){
-
-    alert("Bitte Fotos auswählen");
-
-    return;
-  }
-
-  let uploaded = 0;
-
-  document.getElementById("status").innerText =
-    "Upload läuft...";
-
-  for (const file of files) {
-
-    const base64Data =
-      await toBase64(file);
-
-    const formData =
-      new URLSearchParams();
-
-    formData.append(
-      "data",
-      base64Data.split(',')[1]
-    );
-
-    formData.append(
-      "name",
-      file.name
-    );
-
-    formData.append(
-      "type",
-      file.type
-    );
-
-    try {
-
-      const response = await fetch(
-        UPLOAD_URL,
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-
-      const text =
-        await response.text();
-
-      if(text === "OK"){
-
-        uploaded++;
-
-        document.getElementById("status").innerText =
-          `${uploaded}/${files.length} Fotos hochgeladen ❤️`;
-
-      }
-
-    } catch(error){
-
-      console.log(error);
-
-    }
-
-  }
-
-  document.getElementById("status").innerText =
-    `Alle ${uploaded} Fotos erfolgreich hochgeladen 🎉`;
-
-}
-
-function toBase64(file){
-
-  return new Promise((resolve, reject) => {
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-
-    reader.onload =
-      () => resolve(reader.result);
-
-    reader.onerror =
-      error => reject(error);
-
-  });
-
-}
-
-</script>
 
 </body>
 </html>
