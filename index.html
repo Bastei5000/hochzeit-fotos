@@ -1,15 +1,147 @@
 <!DOCTYPE html>
 
-<html lang="de"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Hochzeitsfotos Upload</title>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hochzeitsfotos Upload</title>
 
-<style> body{ margin:0; height:100vh; /* Hintergrundbild */ background-image: url('hintergrund.jpg'); background-size: cover; /* Füllt den gesamten Bildschirm */ background-position: center center; background-repeat: no-repeat; /* Inhalt zentrieren */ display:flex; justify-content:center; align-items:center; font-family: Arial, sans-serif; } /* Dunkler Overlay-Effekt */ body::before{ content:""; position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.25); /* etwas heller */ z-index:0; } /* PC / Desktop Einstellungen */ .box{ position:relative; z-index:1; background: rgba(255,255,255,0.95); padding:50px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); width:500px; max-width:90%; text-align:center; } h1{ margin-top:0; color:#2e7d32; /* Grün */ font-size:40px; } p{ color:#444; font-size:18px; } input{ margin-top:15px; width:100%; } button{ background:#2e7d32; /* Grün */ color:white; border:none; padding:18px 30px; border-radius:12px; cursor:pointer; font-size:18px; margin-top:20px; width:100%; } button:hover{ background:#256628; /* Dunkleres Grün beim Hover */ } #status{ margin-top:20px; font-size:16px; color:#333; } /* Smartphone / Tablet Einstellungen */ @media (max-width:768px){ .box{ width:90%; padding:25px; } h1{ font-size:28px; } p{ font-size:16px; } button{ font-size:16px; padding:15px 20px; } #status{ font-size:14px; } } </style>
+  <style>
+
+    body{
+      margin:0;
+      height:100vh;
+
+      /* PC / Desktop Hintergrundbild */
+      background-image: url('hintergrund-pc.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      /* Inhalt zentrieren */
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      /* Neue Schriftart */
+      font-family: "Minion Variable Concept", serif;
+    }
+
+    /* Dunkler Overlay-Effekt */
+    body::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background: rgba(0,0,0,0.25);
+      z-index:0;
+    }
+
+    /* PC / Desktop Einstellungen */
+    .box{
+      position:relative;
+      z-index:1;
+
+      background: rgba(255,255,255,0.95);
+      padding:50px;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+
+      width:500px;
+      max-width:90%;
+
+      text-align:center;
+    }
+
+    h1{
+      margin-top:0;
+      color:#EE9F50; /* Neue Farbe für Hochzeitsfotos */
+      font-size:40px;
+    }
+
+    p{
+      color:#444;
+      font-size:18px;
+    }
+
+    input{
+      margin-top:15px;
+      width:100%;
+      font-family: "Minion Variable Concept", serif;
+    }
+
+    button{
+      background:#A5B7A9; /* Buttonfarbe */
+      color:white;
+      border:none;
+
+      padding:18px 30px;
+      border-radius:12px;
+
+      cursor:pointer;
+      font-size:18px;
+
+      margin-top:20px;
+      width:100%;
+
+      font-family: "Minion Variable Concept", serif;
+    }
+
+    button:hover{
+      background:#8FA094; /* Etwas dunkler beim Hover */
+    }
+
+    #status{
+      margin-top:20px;
+      font-size:16px;
+      color:#333;
+    }
+
+    /* Smartphone / Tablet Einstellungen */
+    @media (max-width:768px){
+
+      body{
+        /* Handy Hintergrundbild */
+        background-image: url('hintergrund-handy.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+
+      .box{
+        width:90%;
+        padding:25px;
+      }
+
+      h1{
+        font-size:28px;
+      }
+
+      p{
+        font-size:16px;
+      }
+
+      button{
+        font-size:16px;
+        padding:15px 20px;
+      }
+
+      #status{
+        font-size:14px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
 <body>
 
-<div class="box">
+  <div class="box">
 
+```
 <h1>💍 Hochzeitsfotos</h1>
 
 <p>Teile deine schönsten Momente mit uns ❤️</p>
@@ -26,9 +158,112 @@
 </button>
 
 <p id="status"></p>
+```
 
-</div>
+  </div>
 
-<script> const UPLOAD_URL = "https://script.google.com/macros/s/AKfycbzylfuq0Zp7Jz6pOY8bI1Tw7DCbY9in06y9pYJLuLAyJiQJbjJeJ8sihP3XOfor1eJZ/exec"; async function uploadPhotos() { const files = document.getElementById('photos').files; if(files.length === 0){ alert("Bitte Fotos auswählen"); return; } let uploaded = 0; document.getElementById("status").innerText = "Upload läuft..."; for (const file of files) { const base64Data = await toBase64(file); const formData = new URLSearchParams(); formData.append( "data", base64Data.split(',')[1] ); formData.append( "name", file.name ); formData.append( "type", file.type ); try { const response = await fetch( UPLOAD_URL, { method: "POST", body: formData } ); const text = await response.text(); if(text === "OK"){ uploaded++; document.getElementById("status").innerText = `${uploaded}/${files.length} Fotos hochgeladen ❤️`; } } catch(error){ console.log(error); document.getElementById("status").innerText = "Fehler beim Hochladen eines Fotos."; } } document.getElementById("status").innerText = `Alle ${uploaded} Fotos erfolgreich hochgeladen 🎉`; } function toBase64(file){ return new Promise((resolve, reject) => { const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = () => resolve(reader.result); reader.onerror = error => reject(error); }); } </script>
+<script>
 
-</body> </html>
+const UPLOAD_URL =
+"https://script.google.com/macros/s/AKfycbzylfuq0Zp7Jz6pOY8bI1Tw7DCbY9in06y9pYJLuLAyJiQJbjJeJ8sihP3XOfor1eJZ/exec";
+
+async function uploadPhotos() {
+
+  const files =
+    document.getElementById('photos').files;
+
+  if(files.length === 0){
+
+    alert("Bitte Fotos auswählen");
+
+    return;
+  }
+
+  let uploaded = 0;
+
+  document.getElementById("status").innerText =
+    "Upload läuft...";
+
+  for (const file of files) {
+
+    const base64Data =
+      await toBase64(file);
+
+    const formData =
+      new URLSearchParams();
+
+    formData.append(
+      "data",
+      base64Data.split(',')[1]
+    );
+
+    formData.append(
+      "name",
+      file.name
+    );
+
+    formData.append(
+      "type",
+      file.type
+    );
+
+    try {
+
+      const response = await fetch(
+        UPLOAD_URL,
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const text =
+        await response.text();
+
+      if(text === "OK"){
+
+        uploaded++;
+
+        document.getElementById("status").innerText =
+          `${uploaded}/${files.length} Fotos hochgeladen ❤️`;
+
+      }
+
+    } catch(error){
+
+      console.log(error);
+
+      document.getElementById("status").innerText =
+        "Fehler beim Hochladen eines Fotos.";
+
+    }
+
+  }
+
+  document.getElementById("status").innerText =
+    `Alle ${uploaded} Fotos erfolgreich hochgeladen 🎉`;
+
+}
+
+function toBase64(file){
+
+  return new Promise((resolve, reject) => {
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload =
+      () => resolve(reader.result);
+
+    reader.onerror =
+      error => reject(error);
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>
