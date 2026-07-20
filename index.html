@@ -12,12 +12,12 @@
       margin:0;
       height:100vh;
 
-      /* PC / Desktop Hintergrundbild komplett sichtbar */
+      /* PC / Desktop Hintergrundbild */
       background-image: url('hintergrund-pc.jpeg');
-      background-size: 90% auto;
-      background-position: center;
+      background-size: 100% auto; /* etwas füllender, aber nicht komplett */
+      background-position: center center;
       background-repeat: no-repeat;
-      background-color: transparent;
+      background-color: white;
 
       /* Inhalt zentrieren */
       display:flex;
@@ -26,18 +26,6 @@
 
       /* Schriftart */
       font-family: "Minion Variable Concept", serif;
-    }
-
-    /* Dunkler Overlay-Effekt */
-    body::before{
-      content:"";
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background: rgba(0,0,0,0.15);
-      z-index:0;
     }
 
     /* PC / Desktop Einstellungen */
@@ -142,6 +130,7 @@
 
   <div class="box">
 
+```
 <h1>💍 Hochzeitsfotos</h1>
 
 <p>Teile deine schönsten Momente mit uns ❤️</p>
