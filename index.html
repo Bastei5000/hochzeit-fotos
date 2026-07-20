@@ -128,27 +128,26 @@
 
 <body>
 
-  <div class="box">
+<div class="box">
 
+  <h1>💍 Hochzeitsfotos</h1>
 
-<h1>💍 Hochzeitsfotos</h1>
+  <p>Teile deine schönsten Momente mit uns ❤️</p>
 
-<p>Teile deine schönsten Momente mit uns ❤️</p>
+  <input
+    type="file"
+    id="photos"
+    multiple
+    accept="image/*"
+  >
 
-<input
-  type="file"
-  id="photos"
-  multiple
-  accept="image/*"
->
+  <button onclick="uploadPhotos()">
+    Fotos hochladen
+  </button>
 
-<button onclick="uploadPhotos()">
-  Fotos hochladen
-</button>
+  <p id="status"></p>
 
-<p id="status"></p>
-
-  </div>
+</div>
 
 <script>
 
